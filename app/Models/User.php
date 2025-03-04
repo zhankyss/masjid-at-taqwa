@@ -62,4 +62,14 @@ class User extends Authenticatable
             $model->id = (string) Str::uuid();
         });
     }
+
+    public function donasi()
+    {
+        return $this->hasMany(Donasi::class, 'user_id');
+    }
+
+    public function anggota()
+    {
+        return $this->hasOne(AnggotaKemasjidan::class, 'user_id');
+    }
 }

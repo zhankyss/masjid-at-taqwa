@@ -16,4 +16,9 @@ class Keuangan extends Model
         'jumlah',
         'tanggal',
     ];
+
+    public function laporan()
+    {
+        return $this->hasMany(LaporanKeuangan::class, 'keuangan_id');
+    }
 }

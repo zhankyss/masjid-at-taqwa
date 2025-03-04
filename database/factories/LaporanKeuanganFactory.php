@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Donasi;
+use App\Models\Keuangan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,5 +26,15 @@ class LaporanKeuanganFactory extends Factory
             'total_pemasukan' => $pemasukan, // Total pemasukan
             'total_pengeluaran' => $pengeluaran, // Total pengeluaran
         ];
+    }
+
+    public function keuangan()
+    {
+        return $this->belongsTo(Keuangan::class, 'keuangan_id');
+    }
+
+    public function pemasukan()
+    {
+        return $this->belongsTo(Donasi::class, 'total_pemasukan_id');
     }
 }

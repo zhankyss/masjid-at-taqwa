@@ -14,5 +14,18 @@ class Donasi extends Model
         'jenis',
         'jumlah',
         'metode_pembayaran',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pemasukan()
+    {
+        return $this->hasMany(LaporanKeuangan::class, 'total_pemasukan_id');
+    }
+
+    
 }

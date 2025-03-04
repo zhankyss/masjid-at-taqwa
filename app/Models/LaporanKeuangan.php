@@ -14,5 +14,17 @@ class LaporanKeuangan extends Model
         'tanggal_laporan',
         'total_pemasukan',
         'total_pengeluaran',
+        'total_pemasukan_id',
+        'keuangan_id',
     ];
+
+    public function donasi()
+    {
+        return $this->belongsTo(Donasi::class, 'total_pemasukan_id');
+    }
+
+    public function keuangan()
+    {
+        return $this->belongsTo(Keuangan::class, 'keuangan_id');
+    }
 }

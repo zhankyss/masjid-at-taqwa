@@ -13,5 +13,11 @@ class JadwalImam extends Model
     protected $fillable = [
         'tanggal',
         'waktu_shalat',
+        'imam_id',
     ];
+
+    public function imam()
+    {
+        return $this->belongsTo(AnggotaKemasjidan::class, 'imam_id');
+    }
 }
