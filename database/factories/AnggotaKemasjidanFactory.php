@@ -17,10 +17,7 @@ class AnggotaKemasjidanFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama' => fake()->name(), // Nama random
-            'kontak' => fake()->numerify('08##########'), // Nomor HP random
-            'alamat' => fake()->address(), // Alamat random
-            'peran' => fake()->randomElement(['Takmir Masjid', 'Sekretaris', 'Bendahara', 'Anggota Kemasjidan', 'Anggota Remaja Masjid']), // Peran dalam organisasi masjid
+            //
         ];
     }
 }

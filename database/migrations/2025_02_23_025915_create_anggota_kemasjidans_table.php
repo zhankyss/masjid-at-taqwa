@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::create('anggota_kemasjidans', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
-            $table->string('nama');
-            $table->string('kontak');
-            $table->text('alamat');
-            $table->string('peran');
             $table->timestamps();
         });
     }

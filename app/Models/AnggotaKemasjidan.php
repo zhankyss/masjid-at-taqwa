@@ -11,9 +11,6 @@ class AnggotaKemasjidan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'kontak',
-        'alamat',
         'peran',
         'user_id',
     ];

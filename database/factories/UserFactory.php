@@ -39,7 +39,7 @@ class UserFactory extends Factory
             'email' => $nameEmail.'@gmail.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('1'),
-            'gender' => fake()->randomElement(['pria', 'wanita']),
+            'gender' => fake()->randomElement(['Ikhwan', 'Akhwat']),
             'alamat' => fake()->address(),
             'phone' => fake()->phoneNumber(),
             'date_of_birth' => fake()->date(),
