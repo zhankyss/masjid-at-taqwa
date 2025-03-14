@@ -3,17 +3,29 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\User;
+use Filament\Panel;
+use Pages\ViewUser;
 use Filament\Tables;
+use Pages\ViewAnggota;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Actions;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use App\Models\AnggotaKemasjidan;
+use function Laravel\Prompts\text;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AnggotaKemasjidanResource\Pages;
+
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\CreateRecord;
+use Filament\Infolists\Components\TextEntry;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AnggotaKemasjidanResource\RelationManagers;
 
 class AnggotaKemasjidanResource extends Resource
@@ -35,70 +47,60 @@ class AnggotaKemasjidanResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.status')
-                ->label('Role :')
-                ->badge()
-                ->color(fn ($state) => match ($state) {
-                    'Takmir' => 'info',
-                    'CoTakmir' => 'green',
-                    'Sekretaris' => 'red',
-                    'Bendahara' => 'sky',
-                    'Anggota' => 'lime',
-                    default => 'gray',
-                }),
-                
-                TextColumn::make('User.name')
-                    ->label('Nama :')
-                    ->searchable(),
-
-                    TextColumn::make('User.phone')
-                    ->label('No Telephone :')
-                    ->searchable(),
-
-                    TextColumn::make('User.date_of_birth')
-                    ->label('Tanggal Lahir :'),
-
-                    TextColumn::make('User.gender')
-                    ->label('Jenis Kelamin :')
-                    ->badge('true')
+                    ->label('Role')
+                    ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'Ikhwan' => 'cyan',
-                        'Akhwat' => 'pink'}),
+                        'Takmir' => 'cyan',
+                        'CoTakmir' => 'blue',
+                        'Sekretaris' => 'violet',
+                        'Bendahara' => 'fuchsia',
+                        'Anggota' => 'gray',
+                    })
+                    ->sortable(),
+                // ->prefixIcon(),
+                TextColumn::make('user.name')
+                    ->icon('heroicon-o-user')
+                    ->searchable()
+                    ->sortable(),
 
-                    TextColumn::make('User.alamat')
-                        ->label('Alamat :'),
+                // ->prefixIcon(),
+                TextColumn::make('user.phone')
+                    ->label('no Telephone')
+                    ->icon('heroicon-o-phone')
+                    ->searchable(),
+                // ->prefixIcon(),
+                TextColumn::make('user.date_of_birth')
+                    ->icon('heroicon-o-cake')
+
+                    ->label('Tanggal Lahir'),
+                // ->prefixIcon(),
+                TextColumn::make('user.gender')
+                    ->label('Gender')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Ikhwan' => 'primary',
+                        'Akhwat' => 'info',
+                    }),
+                // ->prefixIcon(),
+                TextColumn::make('user.alamat')
+                    ->label('Alamat')
+                    ->icon('heroicon-o-map-pin')
+
+                    ->searchable(),
+                // ->prefixIcon(),
             ])
             ->filters([
-                SelectFilter::make($a = 'status')
-    ->label('Filter Peran')
-    ->options(function ($a) {
-        return User::select('status')->distinct()->get()->pluck('status', 'status')->toArray();
-    })
-    ->query(fn ($query, $data) => 
-        empty($data) 
-            ? $query
-            : $query->whereRelation('user', 'status', $data)
-    )
-    // '' => 'Semua',
-    //     'Takmir' => 'Takmir',
-    //     'Cotakmir' => 'Cotakmir',
-    //     'Sekretaris' => 'Sekretaris',
-    //     'Bendahara' => 'Bendahara',
-    //     'Anggota' => 'Anggota',
-
-
-            
-
+                //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
-
     public static function getRelations(): array
     {
         return [
@@ -106,12 +108,29 @@ class AnggotaKemasjidanResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+{
+    return false;
+}
+
+public static function infolist(Infolist $infolist): Infolist
+{
+    return $infolist
+        ->schema([
+            // 
+        ]);
+}
+
+
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListAnggotaKemasjidans::route('/'),
-            'create' => Pages\CreateAnggotaKemasjidan::route('/create'),
-            'edit' => Pages\EditAnggotaKemasjidan::route('/{record}/edit'),
+            'view' => Pages\ViewAnggota::route('/{record}'),
+            // 'create' => Pages\CreateAnggotaKemasjidan::route('/create'),
+            // 'edit' => Pages\EditAnggotaKemasjidan::route('/{record}/edit'),
         ];
     }
+
 }
