@@ -127,7 +127,7 @@ public static function infolist(Infolist $infolist): Infolist
     {
         return [
             'index' => Pages\ListAnggotaKemasjidans::route('/'),
-            'view' => Pages\ViewAnggota::route('/{record}'),
+            // 'view' => Pages\ViewAnggota::route('/{record}'),
             // 'create' => Pages\CreateAnggotaKemasjidan::route('/create'),
             // 'edit' => Pages\EditAnggotaKemasjidan::route('/{record}/edit'),
         ];
